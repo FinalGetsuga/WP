@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <style>
+        body {
+          width: 800px;
+          margin: auto;
+        }
+
+        label{
+          display: inline-block;
+          width: 100px;
+        }
+
+        div{
+          margin-bottom: 10px;
+        }
+
+        input[type=text] {
+          width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <form action="/songs/add" method="POST">
+        <div>
+          <label for="title">Title:</label>
+          <input name="title" id="title" type="text">
+        </div>
+        <div>
+          <label for="trackId">Track Id:</label>
+          <input name="trackId" id="trackId" type="text">
+        </div>
+        <div>
+          <label for="genre">Genre:</label>
+          <input name="genre" id="genre" type="text">
+        </div>
+        <div>
+          <label for="releaseYear">Release Year:</label>
+          <input name="releaseYear" id="releaseYear" type="text">
+        </div>
+        <div>
+          <label for="album">Album:</label>
+            <select id="album" name="album">
+                <option th:each="album : ${albums}"
+                th:value="${album.getId()}"
+                th:text="${album.getName()}">
+                </option>
+            </select>
+
+        </div>
+        <div>
+          <button type="submit">Submit</button>
+        </div>
+    </form>
+</body>
+</html>

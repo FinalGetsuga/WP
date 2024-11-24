@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Document</title>
+  <style>
+    body {
+      width: 800px;
+      margin: auto;
+    }
+
+    label{
+      display: inline-block;
+      width: 100px;
+    }
+
+    div{
+      margin-bottom: 10px;
+    }
+
+    input[type=text] {
+      width: 150px;
+    }
+  </style>
+</head>
+<body>
+<form action="#" method="POST">
+  <div>
+    <label for="title">Title:</label>
+    <input th:value="${song.getTitle()}" name="title" id="title" type="text">
+  </div>
+  <div>
+    <label for="trackId">Track Id:</label>
+    <input th:value="${song.getTrackId()}" name="trackId" id="trackId" type="text">
+  </div>
+  <div>
+    <label for="genre">Genre:</label>
+    <input th:value="${song.getGenre()}" name="genre" id="genre" type="text">
+  </div>
+  <div>
+    <label for="releaseYear">Release Year:</label>
+    <input th:value="${song.getReleaseYear()}" name="releaseYear" id="releaseYear" type="text">
+  </div>
+  <div>
+    <label for="album">Album:</label>
+    <select id="album" name="album">
+      <th:block th:each="album : ${albums}">
+        <option th:value="${album.getId()}" th:selected="${song.getAlbum().getId()}==${album.getId()}"> <span th:text="${album.getName()}"></span></option>
+      </th:block>
+    </select>
+
+  </div>
+  <div>
+    <button type="submit">Submit</button>
+  </div>
+</form>
+</body>
+</html>

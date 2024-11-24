@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Songs Homepage - Welcome to My Music Store</title>
+    <style>
+        body {
+            width: 1000px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Music Store</h1>
+    </header>
+    <main>
+        <h2>Choose a song:</h2>
+        <form action="/artists" method="get">
+            <div th:each="song : ${songs}">
+
+                    <input type="radio" name="trackId" th:id="${song.getTrackId()}" th:value="${song.getTrackId()}">
+                    <label th:for="${song.id}" th:text="'Title: ' + ${song.getTitle()} + ', Genre: ' + ${song.getGenre()} + ', Release Year: ' + ${song.getReleaseYear()} + ', Album: ' + ${song.album.getName()}"></label>
+                    <a th:href="'/songDetails?trackId=' + ${song.getTrackId()}">Details</a>
+                <button th:formaction="'/songs/delete/' + ${song.id}" class="delete-button" method="get">Delete</button>
+                <button th:formaction="'/songs/edit-form/' + ${song.id}" class="delete-button" method="get">Edit</button>
+                <br/>
+            </div>
+            <br>
+            <input type='submit' value='Submit'>
+        </form>
+
+        <br>
+        <div>
+            <button><a href="songs/add-form" method="get">Add new song</a></button>
+        </div>
+    </main>
+
+</body>
+</html>
