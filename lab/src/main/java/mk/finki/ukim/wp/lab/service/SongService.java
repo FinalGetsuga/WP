@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface SongService {
     List<Song> listSongs();
+    List<Song> findAllByAlbum_Id(Long albumId);
     Artist addArtistToSong(Artist artist, Song song);
     Song findByTrackId(String trackId);
     Song findById(Long id);

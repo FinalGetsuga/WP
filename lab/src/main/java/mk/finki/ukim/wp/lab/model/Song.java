@@ -28,7 +28,6 @@ public class Song {
     private Album album;
 
     public Song(String trackId, String title, String genre, String releaseYear, Album album) {
-        this.id = (long) (Math.random() * 1000);
         this.trackId = trackId;
         this.title = title;
         this.genre = genre;

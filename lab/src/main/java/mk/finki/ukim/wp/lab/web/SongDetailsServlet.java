@@ -34,7 +34,7 @@ public class SongDetailsServlet extends HttpServlet {
                 .buildExchange(req, resp);
         WebContext context = new WebContext(webExchange);
 
-        context.setVariable("songg",songService.findByTrackId(req.getParameter("trackId")));
+        context.setVariable("song",songService.findByTrackId(req.getParameter("trackId")));
         templateEngine.process("songDetails.html", context, resp.getWriter());
     }
 

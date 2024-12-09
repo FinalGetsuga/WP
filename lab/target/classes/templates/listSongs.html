@@ -16,15 +16,26 @@
         <h1>Welcome to My Music Store</h1>
     </header>
     <main>
+        <form action="#" method="get">
+            <select name="albumId">
+                <option value selected>Select album</option>
+                <option th:each="album : ${albums}"
+                        th:value="${album.id}"
+                        th:selected="${albumId}==${album.getId()}"
+                        th:text="${album.name}">
+                </option>
+            </select>
+            <button type="submit">Filter</button>
+        </form>
         <h2>Choose a song:</h2>
         <form action="/artists" method="get">
             <div th:each="song : ${songs}">
 
                     <input type="radio" name="trackId" th:id="${song.getTrackId()}" th:value="${song.getTrackId()}">
                     <label th:for="${song.id}" th:text="'Title: ' + ${song.getTitle()} + ', Genre: ' + ${song.getGenre()} + ', Release Year: ' + ${song.getReleaseYear()} + ', Album: ' + ${song.album.getName()}"></label>
-                    <a th:href="'/songDetails?trackId=' + ${song.getTrackId()}">Details</a>
+                    <a th:href="'/songs/details/' + ${song.getTrackId()}">Details</a>
                 <button th:formaction="'/songs/delete/' + ${song.id}" class="delete-button" method="get">Delete</button>
-                <button th:formaction="'/songs/edit-form/' + ${song.id}" class="delete-button" method="get">Edit</button>
+                <button th:formaction="'/songs/edit/' + ${song.id}" class="delete-button" method="get">Edit</button>
                 <br/>
             </div>
             <br>

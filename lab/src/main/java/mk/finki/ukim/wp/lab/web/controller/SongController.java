@@ -2,6 +2,7 @@ package mk.finki.ukim.wp.lab.web.controller;
 
 import mk.finki.ukim.wp.lab.model.Album;
 import mk.finki.ukim.wp.lab.model.Song;
+import mk.finki.ukim.wp.lab.repository.jpa.AlbumRepository;
 import mk.finki.ukim.wp.lab.service.AlbumService;
 import mk.finki.ukim.wp.lab.service.SongService;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/songs")
+@RequestMapping(path={"" , "/songs"})
 public class SongController {
     private final SongService songService;
     private final AlbumService albumService;
@@ -22,12 +23,18 @@ public class SongController {
     }
 
     @GetMapping
-    public String getSongsPage(@RequestParam(required = false)String error, Model model) {
+    public String getSongsPage(@RequestParam(required = false)String error, Model model, @RequestParam(required = false)Long albumId) {
         if (error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
-        model.addAttribute("songs",this.songService.listSongs());
+
+        if (albumId != null) {
+            model.addAttribute("songs",songService.findAllByAlbum_Id(albumId));
+            model.addAttribute("albumId",albumId);
+        }else model.addAttribute("songs",this.songService.listSongs());
+
+        model.addAttribute("albums",albumService.findAll());
         return "listSongs";
     }
 
@@ -55,7 +62,14 @@ public class SongController {
         return "redirect:/songs";
     }
 
-    @GetMapping("/edit-form/{songId}")
+    @GetMapping("/details/{trackId}")
+    public String showDetails(Model model, @PathVariable String trackId) {
+        Song song = this.songService.findByTrackId(trackId);
+        model.addAttribute("song", song);
+        return "song-details";
+    }
+
+    @GetMapping("/edit/{songId}")
     public String editSong(@PathVariable Long songId, Model model) {
         Song song = this.songService.findById(songId);
         List<Album> albumList = this.albumService.findAll();
@@ -74,6 +88,5 @@ public class SongController {
         songService.editSong(songId, trackId, title, genre, releaseYear, Long.parseLong(album));
         return "redirect:/songs";
     }
-
 
 }

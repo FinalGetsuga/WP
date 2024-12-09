@@ -35,7 +35,7 @@ public class ArtistController {
         Artist artist = artistService.findById(artistId);
         Song song = songService.findByTrackId(trackId);
         songService.addArtistToSong(artist,song);
-        return "redirect:/songDetails?trackId="+trackId;
+        return "redirect:/songs/details/"+trackId;
     }
 
 
